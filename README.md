@@ -13,6 +13,6 @@ processing and surface modification, over flow control, to biomedical applicatio
     Besides conventional methods for the solution of PDEs, the use of ML methods to solve them become quite popular recently. The goal is to extend available methods and extend them to certain types of PDEs.
 
 
-The project is supported by DAAD - project number 57703239.
+The project is supported by DAAD Programm des Projektbezogenen Personenaustauschs (PPP) mit Serbien - project number 57703239.
 
 
