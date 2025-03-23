@@ -1,0 +1,6 @@
+# Photosmesher
+
+The *photosmesher* (short for "photographs mesher") is a tool designed to streamline and automate the process of simulation geometry and mesh generation. While excellent meshing tools like *gmsh* are available, creating an appropriate mesh from scratch remains time-consuming and requires lots of effort. Recognizing that modelling and experimental articles usually include detailed schematic diagrams of simulation domains, discharge setups, plasma sources or photographs of discharges, we try to mitigate this effort by converting such photographs into simulation geometry and generating the desired mesh.
+The photosmesher uses the *OpenCV* computer vision library to identify elementary shapes in schematic diagrams or discharge photographs. These detected shapes are then utilized to construct geometry and generate the mesh, employing *gmsh* via its *Python* API.
+
+It is important to note that the *photosmesher* is still under development. At this stage, it is capable of detecting straight lines within photos; however, users must manually select the lines and points used in building the desired geometry. Future updates will introduce the support for curved boundaries. Additionally, the current version of mesh refinement is based on a *gmsh*'s box field option around high-intensity regions (e.g. streamer photographs).
