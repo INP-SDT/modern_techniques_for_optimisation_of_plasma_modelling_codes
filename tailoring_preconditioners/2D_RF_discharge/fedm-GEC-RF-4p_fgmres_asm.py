@@ -1,14 +1,10 @@
 """
-In this example, the glow discharge in argon at low pressure is modelled. The aim is to demonstrate
-the use of the module functions for the case when several particle species and numerous processes are considered
-in the model. Furthermore, the local mean energy approximation is used in this example. The transport and rate coefficients as well
-as the reaction scheme required for generating gain, loss and power matrices, used to define the rates and source
-term, are imported in the program from the external file. The transport and rate coefficients are stored in look-up
-tables and interpolated for a given mean electron energy or reduced electric field in a function, when needed.
-As in previous example, the coupled i.e., fully implicit approach, consisting in solving of the all equations at once is applied.
-The semi-implicit treatment of the reaction rate and transport coefficients is used.
-Again, the adaptive backwards differentiation formula of the order of two
-with the PID controller for time-step size are used.
+In this example, the RF discharge within the GEC reference cell in argon at
+a pressure of 100 mTorr powered by sinusoidal voltage waveform is modelled using
+FEDM. The voltage amplitude is set to 100 V, without the bias voltage.
+In this example, we solve a system of nonlinear equations using a nonlinear SNES
+solver. For each Newton iteration, we apply the flexible generalized minimal
+residual method (fgmres) with the additive Schwarz method as a preconditioner.
 """
 from dolfin import *
 import numpy as np
@@ -52,7 +48,6 @@ def Normal_vectorDG(mesh: df.Mesh):
 
 
 # Defining type of used solver and its parameters.
-linear_solver = "gmres"  # Type of linear solvers: lu | mumps | gmres | bicgstab
 maximum_iterations = 10 # Maximum number of nonlinear iterations
 relative_tolerance = 1e-4 # Relative tolerance of nonlinear solver
 
