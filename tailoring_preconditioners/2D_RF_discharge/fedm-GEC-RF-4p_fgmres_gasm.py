@@ -326,7 +326,6 @@ while i < number_of_species:
     temp_output_variable.rename(particle_species_file_names[i], str(i))  # Renaming variable for output
     if i > 2:
         xdmf_file_u[i].write_checkpoint(temp_output_variable, particle_species_file_names[i], t*1e6, XDMFFile.Encoding.HDF5, False) # Writting initial particle number densities to file
-        # xdmf_file_u[i] << (temp_output_variable, t*1e6) # Writting initial particle number densities to file
     i += 1
 
 # ===========================================================================================================================
@@ -346,7 +345,6 @@ def Grounded_electrode(x, on_boundary):
 
 def Grounded_walls(x, on_boundary):
     return x[0] >= electrode_dielectric_width  and on_boundary
-    # return x[0] >= electrode_width  and on_boundary
 
 # Defining Dirichlet boundary conditions
 Powered_Electrode_bc = DirichletBC(V, Phi_powered, Powered_electrode)
@@ -377,14 +375,9 @@ Phi_old.assign(Phi)  # Updating potential values
 temp_output_variable.assign(Phi)  # Setting value for output
 temp_output_variable.rename('Phi', str(0))  # Renaming variable for output
 xdmf_file_Phi[0].write_checkpoint(temp_output_variable, 'Phi', t*1e6, XDMFFile.Encoding.HDF5, False) # Writting initial particle number densities to file
-# vtkfile_Phi[0] << (temp_output_variable, t)  # Writting the potential in intial time step to the output file
 
 redE.assign(project(1e21*sqrt(dot(-grad(Phi), -grad(Phi)))/N0, solver_type='mumps'))  # Calculating reduced electric field
 redE_old.assign(redE)  # Updating reduced electric field in previous time step
-
-# temp = Function(V)
-# [bc.apply(temp.vector()) for bc in Voltage_bcs]
-# File('test.pvd') << temp
 
 # Calculating transport and rate coefficients using linear interpolation
 Transport_coefficient_interpolation('initial', mobility_dependence, N0, Tgas, mu, mu_x, mu_y, mean_energy, redE)  # Mobilities interpolation
@@ -424,16 +417,10 @@ sigma_new = Function(V)
 sigma_old = Function(V)
 sigma_old1 = Function(V)
 
-# xdmf_file_sigma[0] << (sigma_new, t)
 xdmf_file_sigma[0].write_checkpoint(sigma_new, 'sigma', t*1e6, XDMFFile.Encoding.HDF5, False) # Writting initial particle number densities to file
 
 F_potential_C = weak_form_Poisson_equation(dx, u[number_of_equations-1], v[number_of_equations-1], f_potential_C, r)
 F_potential_C += 2*pi*r*(sigma/(epsilon_0*epsilon_r))*v[number_of_equations-1]*(ds(3)+ds(4))
-# F_potential_C += 2*pi*r*((sigma/(epsilon_0*epsilon_r))+epsilon_r*(-grad(u[number_of_equations-1])[0]))*v[number_of_equations-1]*(ds(3)+ds(4))
-# F_potential_C += 2*pi*r*(epsilon_r*(-grad(u[number_of_equations-1])[0]))*v[number_of_equations-1]*(ds(3)+ds(4))
-# F_potential_C += 2*pi*r*(epsilon_r*(-grad(u[number_of_equations-1])[0]) + sigma)*v[number_of_equations-1]*(ds(3)+ds(4))
-# F_potential_C += 2*pi*r*epsilon_r*dot(-grad(u[number_of_equations-1]), normal_plasma)*v[number_of_equations-1]*(ds(3)+ds(4))
-# F_potential_C = 2*pi*r*epsilon_0 * inner(grad(u[number_of_equations-1]), grad(v[number_of_equations-1]))*dx - 2*pi*r*f_potential_C*v[number_of_equations-1]*dx + 2*pi*r*epsilon_0*epsilon_r *sigma*v[number_of_equations-1]*ds(3) + 2*pi*r*epsilon_0*epsilon_r *sigma*v[number_of_equations-1]*ds(4)
 
 Ion_flux = 0   # Sum of ion fluxes, required for secondary electron emission in boundary condition
 i = 1
@@ -481,8 +468,6 @@ i = 0
 while i < number_of_boundaries:
     F_en += Boundary_flux('flux source', equation_type[number_of_species-1], particle_type[number_of_species-1], sign[number_of_species-1], 5.0*mu_si[number_of_species-1]/3.0, E, normal_plasma, u[0], gamma[i]*u_see_met, v[0], ds_plasma(i+1), r, 1.3333*vth[number_of_species-1], ref_coeff[i][number_of_species-1], Ion_flux)
     i += 1
-
-# print(str(F))
 
 F += F_en  # Adding electron energy balance equation variational fromulation
 F += F_potential_C  # Adding Poisson equation variational formulation
