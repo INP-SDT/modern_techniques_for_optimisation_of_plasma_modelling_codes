@@ -1,5 +1,5 @@
-# Reinforcement learning time-stepping
+# Reinforcement learning for adaptive time-stepping
 
-This example implements a reinforcement learning method implemented in PyTorch to optimize time-step size control. It focuses on maximizing cumulative rewards over time, with the loss function directing the updates of network parameters to favour actions that lead to greater rewards, ultimately resulting in higher time steps. 
+This example presents a reinforcement learning agent, implemented in PyTorch, for optimizing adaptive time-stepping in simulations. The agent's objective is to maximize a cumulative reward, which is achieved by updating the neural network's parameters via a loss function. The reward function is designed to balance two competing goals: minimizing the total number of simulation steps to reduce computational cost, while simultaneously maintaining the simulation's accuracy within an acceptable tolerance.
 
-The input parameters include the number densities of the species being considered (in this case, electrons and ions) and the electric field. This simple example file serves as a prototype for implementing the procedure in other Python-based plasma modelling codes.
+As a prototypical implementation, the agent's policy is informed by key physical parameters of a plasma model, specifically the species number densities (electrons and ions) and the electric field. This proof-of-concept serves as a template for integrating similar reinforcement learning-based optimization into other Python-based plasma modeling codes.
