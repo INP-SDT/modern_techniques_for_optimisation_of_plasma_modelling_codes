@@ -4,3 +4,24 @@ The *photosmesher* (short for "photographs mesher") is a tool designed to stream
 The photosmesher uses the *OpenCV* computer vision library to identify elementary shapes in schematic diagrams or discharge photographs. These detected shapes are then utilized to construct geometry and generate the mesh, employing *gmsh* via its *Python* API.
 
 It is important to note that the *photosmesher* is still under development. At this stage, it is capable of detecting straight lines within photos; however, users must manually select the lines and points used in building the desired geometry. Future updates will introduce the support for curved boundaries. Additionally, the current version of mesh refinement is based on a *gmsh*'s box field option around high-intensity regions (e.g. streamer photographs).
+
+
+# How to Run
+Execute following commands in the terminal
+
+```bash
+git clone https://github.com/INP-SDT/modern_techniques_for_optimisation_of_plasma_modelling_codes.git
+cd modern_techniques_for_optimisation_of_plasma_modelling_codes/mesh_generation/photosmesher
+python -m venv env
+source env/bin/activate
+pip install -r requirements
+python3 photosmesher.py
+```
+which installs required modules and start the *photosmesher*.
+
+# Citation
+If you use photosmesher for your research, please cite the following work
+[Jovanović A. P. et al. Exploration of modern techniques for optimising plasma modelling procedures DPG-Frühjahrstagung (DPG Spring Meeting) Göttingen 2025](https://www.dpg-verhandlungen.de/year/2025/conference/goettingen/part/p/session/10/contribution/16)
+
+# Acknowledgements
+Supported by DAAD PPP with Serbia - project number: 57703239.
